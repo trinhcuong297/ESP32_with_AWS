@@ -1,4 +1,4 @@
-menu "Example Configuration"
+menu "AWS IoT Core MQTT Configuration"
 
     config MQTT_CLIENT_IDENTIFIER
         string "The MQTT client identifier used in this example"

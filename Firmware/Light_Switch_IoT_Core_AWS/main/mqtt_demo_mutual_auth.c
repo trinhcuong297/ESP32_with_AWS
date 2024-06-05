@@ -181,7 +181,7 @@ extern const char root_cert_auth_end[]   asm("_binary_root_cert_auth_crt_end");
  * The topic name starts with the client identifier to ensure that each demo
  * interacts with a unique topic name.
  */
-#define MQTT_EXAMPLE_TOPIC                  CLIENT_IDENTIFIER "/example/topic"
+#define MQTT_EXAMPLE_TOPIC                  "esp32/direct/pubsub"
 
 /**
  * @brief Length of client MQTT topic.
@@ -191,7 +191,7 @@ extern const char root_cert_auth_end[]   asm("_binary_root_cert_auth_crt_end");
 /**
  * @brief The MQTT message published in this example.
  */
-#define MQTT_EXAMPLE_MESSAGE                "Hello World!"
+#define MQTT_EXAMPLE_MESSAGE                "{value: 1; address:" CLIENT_IDENTIFIER ";}"
 
 /**
  * @brief The length of the MQTT message published in this example.
@@ -236,10 +236,10 @@ extern const char root_cert_auth_end[]   asm("_binary_root_cert_auth_crt_end");
  */
 #define MQTT_PUBLISH_COUNT_PER_LOOP         ( 5U )
 
-/**
- * @brief Delay in seconds between two iterations of subscribePublishLoop().
- */
-#define MQTT_SUBPUB_LOOP_DELAY_SECONDS      ( 5U )
+// /**
+//  * @brief Delay in seconds between two iterations of subscribePublishLoop().
+//  */
+// #define MQTT_SUBPUB_LOOP_DELAY_SECONDS      ( 5U )
 
 /**
  * @brief Transport timeout in milliseconds for transport send and receive.
@@ -1746,8 +1746,8 @@ aws_iot_demo_main( int argc, char ** argv )
                 LogInfo( ( "Demo completed successfully." ) );
             }
 
-            LogInfo( ( "Short delay before starting the next iteration....\n" ) );
-            sleep( MQTT_SUBPUB_LOOP_DELAY_SECONDS );
+            // LogInfo( ( "Short delay before starting the next iteration....\n" ) );
+            // sleep( MQTT_SUBPUB_LOOP_DELAY_SECONDS );
         }
     }
 
