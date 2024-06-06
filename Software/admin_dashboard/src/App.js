@@ -3,6 +3,7 @@ import { getCurrentUser } from 'aws-amplify/auth';
 import { Authenticator, Button, CheckboxField, Heading, Image, Text, View, useAuthenticator, useTheme} from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import config from './amplifyconfiguration.json';
+
 Amplify.configure(config);
 
 const components = {
@@ -281,12 +282,14 @@ async function currentAuthenticatedUser() {
 export default function App() {
   currentAuthenticatedUser();
   return (
-    <Authenticator formFields={formFields} components={components} services={services} socialProviders={['google']}>
-      {({ signOut, user }) => 
-      <>
-      <h1>Hello {user.username}</h1>
-      <button onClick={signOut}>Sign out</button>
-      </>
-      }
-    </Authenticator>
+    <>
+      <Authenticator formFields={formFields} components={components} services={services} socialProviders={['google']}>
+        {({ signOut, user }) => 
+        <>
+        <h1>Hello {user.username}</h1>
+        <button onClick={signOut}>Sign out</button>
+        </>
+        }
+      </Authenticator>
+    </>
   )};
