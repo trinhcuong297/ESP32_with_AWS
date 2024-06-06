@@ -4,6 +4,7 @@ import LandingIntro from './LandingIntro'
 import ErrorText from  '../../components/Typography/ErrorText'
 import InputText from '../../components/Input/InputText'
 
+
 function Login(){
 
     const INITIAL_LOGIN_OBJ = {
@@ -19,14 +20,14 @@ function Login(){
         e.preventDefault()
         setErrorMessage("")
 
-        if(loginObj.emailId.trim() === "")return setErrorMessage("Email Id is required! (use any value)")
-        if(loginObj.password.trim() === "")return setErrorMessage("Password is required! (use any value)")
+        if(loginObj.emailId.trim() === "")return setErrorMessage("Email is required!")
+        if(loginObj.password.trim() === "")return setErrorMessage("Password is required!")
         else{
             setLoading(true)
             // Call API to check user credentials and save token in localstorage
             localStorage.setItem("token", "DumyTokenHere")
             setLoading(false)
-            window.location.href = '/app/welcome'
+            window.location.href = '/app/dashboard'
         }
     }
 

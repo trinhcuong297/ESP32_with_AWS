@@ -18,8 +18,8 @@ initializeApp()
 
 
 // Check for login and initialize axios
-// const token = checkAuth()
-const token = 1
+const token = checkAuth()
+// const token = 1
 
 
 function App() {
