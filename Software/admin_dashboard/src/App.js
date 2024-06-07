@@ -3,6 +3,7 @@ import { getCurrentUser } from 'aws-amplify/auth';
 import { Authenticator, Button, CheckboxField, Heading, Image, Text, View, useAuthenticator, useTheme} from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import config from './amplifyconfiguration.json';
+import 'aws-amplify/auth/enable-oauth-listener';
 
 Amplify.configure(config);
 
