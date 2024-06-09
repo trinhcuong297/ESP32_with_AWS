@@ -6,8 +6,8 @@ import NextAuth from 'next-auth';
 import authConfig from './auth.config';
 
 const { auth } = NextAuth(authConfig);
-
 export default auth((req) => {
+  console.log(authConfig)
   if (!req.auth) {
     const url = req.url.replace(req.nextUrl.pathname, '/');
     return Response.redirect(url);
