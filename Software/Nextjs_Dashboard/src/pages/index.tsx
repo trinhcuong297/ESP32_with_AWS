@@ -13,13 +13,11 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import MainLayout from "@/layout/main_layout";
-import { fetchUserAttributes  } from "aws-amplify/auth";
+import { fetchAuthSession, fetchUserAttributes  } from "aws-amplify/auth";
 import { useEffect, useState } from "react";
-import { Authenticator } from "@aws-amplify/ui-react";
-
-const inter = Inter({ subsets: ["latin"] });
 
 async function getUser(setUser: any) {
+  console.log(await fetchAuthSession())
   const user = await fetchUserAttributes();
   return setUser(user);
 }
@@ -40,18 +38,21 @@ export default function Home() {
             <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
               <div className="flex items-center justify-between space-y-2">
                 <h2 className="text-3xl font-bold tracking-tight">
-                  Welcome Home, <i>{user?.name}</i>
+                  Welcome home, Boss
                 </h2>
                 <div className="hidden items-center space-x-2 md:flex">
-                  <CalendarDateRangePicker />
-                  <Button>Download</Button>
+                  {/* <CalendarDateRangePicker /> */}
+                  {/* <Button>Download</Button> */}
                 </div>
               </div>
               <Tabs defaultValue="overview" className="space-y-4">
                 <TabsList>
                   <TabsTrigger value="overview">Overview</TabsTrigger>
-                  <TabsTrigger value="analytics" disabled>
-                    Analytics
+                  <TabsTrigger value="switch">
+                    Light Switch
+                  </TabsTrigger>
+                  <TabsTrigger value="temperature">
+                    Temperature
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="overview" className="space-y-4">
@@ -178,6 +179,12 @@ export default function Home() {
                       </CardContent>
                     </Card>
                   </div>
+                </TabsContent>
+                <TabsContent value="switch" className="space-y-4">
+                  
+                </TabsContent>
+                <TabsContent value="temperature" className="space-y-4">
+                  
                 </TabsContent>
               </Tabs>
             </div>

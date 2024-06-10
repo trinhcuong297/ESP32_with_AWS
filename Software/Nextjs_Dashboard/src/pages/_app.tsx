@@ -13,9 +13,17 @@ Amplify.configure({
     Cognito: {
       userPoolId: "	us-east-1_SeqeBD60b",
       userPoolClientId: "28agse0856a2p1s56br2m33m42",
-      identityPoolId: "us-east-1:e0b02e8c-3ee5-4e8a-a456-4f5c6c32eef2",
+      identityPoolId: "us-east-1:63d1bb49-78cf-4c98-8d63-3d2f2089c3b9",
       loginWith: {
         email: true,
+        oauth: {
+          domain:"nextcog.auth.us-east-1.amazoncognito.com",
+          scopes: ['email', 'openid', 'phone', 'email', 'profile', 'aws.cognito.signin.user.admin'],
+          redirectSignIn: ["http://localhost:3000", "https://smarthomedashboardproject.vercel.app"],
+          redirectSignOut: ["http://localhost:3000", "https://smarthomedashboardproject.vercel.app"],
+          responseType: 'code',
+          providers: ['Google']
+        }
       },
       signUpVerificationMethod: "code",
       userAttributes: {

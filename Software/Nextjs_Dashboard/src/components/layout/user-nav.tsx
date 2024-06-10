@@ -42,7 +42,6 @@ export function UserNav() {
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
             <Avatar className="h-8 w-8">
               <CircleUserRoundIcon className='w-full h-full' />
-              <AvatarFallback>{session?.name?.[0]}</AvatarFallback>
             </Avatar>
           </Button>
           </div>
