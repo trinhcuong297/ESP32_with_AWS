@@ -3,7 +3,6 @@ import Head from "next/head";
 import Sidebar from "@/layout/sidebar";
 import { CalendarDateRangePicker } from '@/components/date-range-picker';
 import { Overview } from '@/components/overview';
-import { RecentSales } from '@/components/recent-sales';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -17,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import NextTopLoader from 'nextjs-toploader';
 import { Toaster } from "@/components/ui/toaster";
 import Header from "@/components/layout/header";
+import MainLayout from "@/layout/main_layout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +26,16 @@ export default function Home() {
       <Head>
       <title>Legend - Smart Home System with AWS</title>
       </Head>
-      <NextTopLoader />
+      <MainLayout>
+        hello
+      </MainLayout>
+    </>
+  );
+}
+
+
+
+{/* <NextTopLoader />
       <Toaster />
       <Header/>
       <div className="flex h-screen overflow-hidden pt-16">
@@ -181,7 +190,4 @@ export default function Home() {
           </ScrollArea>
 
         </main>
-      </div>
-    </>
-  );
-}
+      </div> */}

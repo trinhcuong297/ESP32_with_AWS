@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>Legend - Smart Home System with AWS</title>
         <link
             rel="icon"
             href="/logo.svg"

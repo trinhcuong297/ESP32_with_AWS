@@ -35,9 +35,7 @@ Amplify.configure({
 export default function App({ Component, pageProps }: AppProps) {
   return <ThemeProvider>
     <AuthAWS>
-      <main>
-        <Component {...pageProps} />;
-      </main>
+      <Component {...pageProps} />;
     </AuthAWS>
   </ThemeProvider>
 }

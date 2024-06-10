@@ -5,10 +5,7 @@ import { navItems } from '@/constants/data';
 import { MenuIcon } from 'lucide-react';
 import { useState } from 'react';
 
-// import { Playlist } from "../data/playlists";
-
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
-  // playlists: Playlist[];
 }
 
 export function MobileSidebar({ className }: SidebarProps) {
