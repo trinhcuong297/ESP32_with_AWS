@@ -226,7 +226,7 @@ export default function AuthAWS ({children}: {children: React.ReactNode}) {
     signUpAttributes={['name']} 
     formFields={formFields} 
     components={components}
-    className="bg-[url('/auth_bg.svg')] bg-cover">
+    className="bg-[url('/auth_bg.svg')] bg-cover h-screen w-full">
         {children}
     </Authenticator>
 }

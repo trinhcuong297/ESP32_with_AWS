@@ -1,3 +1,4 @@
+import ThemeProvider from "@/components/layout/ThemeToggle/theme-provider";
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
@@ -11,8 +12,8 @@ export default function Document() {
         />
       </Head>
       <body>
-        <Main />
-        <NextScript />
+          <Main />
+          <NextScript />
       </body>
     </Html>
   );

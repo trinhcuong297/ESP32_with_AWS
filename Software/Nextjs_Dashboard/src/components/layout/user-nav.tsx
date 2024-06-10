@@ -11,35 +11,50 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-// import { signOut, useSession } from 'next-auth/react';
+import { fetchUserAttributes, signOut } from 'aws-amplify/auth';
+import { CircleUserRoundIcon, LogOutIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
+
+const fetchSession = async (setSession: any) => {
+  const user = await fetchUserAttributes();
+  setSession(user);
+};
+
 export function UserNav() {
-  const session = {user: {
-    image: "",
-    name: "",
-    email: ""
-  }}
+  const [session, setSession] : [any, any] = useState({});
+  useEffect(() => {
+    fetchSession(setSession);
+  },[])
+
   if (session) {
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
+          <div className='flex'>
+            <div className="flex flex-col space-y-1 pr-4">
+              <p className="text-sm font-medium leading-none">
+                {session?.name}
+              </p>
+              <p className="text-xs leading-none text-muted-foreground">
+                {session?.email}
+              </p>
+            </div>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
             <Avatar className="h-8 w-8">
-              <AvatarImage
-                src={session.user?.image ?? ''}
-                alt={session.user?.name ?? ''}
-              />
-              <AvatarFallback>{session.user?.name?.[0]}</AvatarFallback>
+              <CircleUserRoundIcon className='w-full h-full' />
+              <AvatarFallback>{session?.name?.[0]}</AvatarFallback>
             </Avatar>
           </Button>
+          </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
               <p className="text-sm font-medium leading-none">
-                {session.user?.name}
+                {session?.name}
               </p>
               <p className="text-xs leading-none text-muted-foreground">
-                {session.user?.email}
+                {session?.email}
               </p>
             </div>
           </DropdownMenuLabel>
@@ -47,22 +62,15 @@ export function UserNav() {
           <DropdownMenuGroup>
             <DropdownMenuItem>
               Profile
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Billing
-              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem>
               Settings
-              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem>New Team</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => {}}>
+          <DropdownMenuItem onClick={async () => { await signOut()}}>
             Log out
-            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+            <DropdownMenuShortcut><LogOutIcon /></DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

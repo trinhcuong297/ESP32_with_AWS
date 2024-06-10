@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google";
 import Head from "next/head";
-import Sidebar from "@/layout/sidebar";
 import { CalendarDateRangePicker } from '@/components/date-range-picker';
 import { Overview } from '@/components/overview';
 import { Button } from '@/components/ui/button';
@@ -13,39 +12,35 @@ import {
 } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import NextTopLoader from 'nextjs-toploader';
-import { Toaster } from "@/components/ui/toaster";
-import Header from "@/components/layout/header";
 import MainLayout from "@/layout/main_layout";
+import { fetchUserAttributes  } from "aws-amplify/auth";
+import { useEffect, useState } from "react";
+import { Authenticator } from "@aws-amplify/ui-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
+async function getUser(setUser: any) {
+  const user = await fetchUserAttributes();
+  return setUser(user);
+}
+
 export default function Home() {
+  const [user, setUser]:[any, any] = useState();
+  useEffect(()=>{
+    getUser(setUser);
+  },[])
   return (
     <>
       <Head>
       <title>Legend - Smart Home System with AWS</title>
       </Head>
       <MainLayout>
-        hello
-      </MainLayout>
-    </>
-  );
-}
-
-
-
-{/* <NextTopLoader />
-      <Toaster />
-      <Header/>
-      <div className="flex h-screen overflow-hidden pt-16">
-        <Sidebar />
         <main className="flex-1 overflow-hidden">
           <ScrollArea className="h-full">
             <div className="flex-1 space-y-4 p-4 pt-6 md:p-8">
               <div className="flex items-center justify-between space-y-2">
                 <h2 className="text-3xl font-bold tracking-tight">
-                  Hi, Welcome back 👋
+                  Welcome Home, <i>{user?.name}</i>
                 </h2>
                 <div className="hidden items-center space-x-2 md:flex">
                   <CalendarDateRangePicker />
@@ -180,7 +175,6 @@ export default function Home() {
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <RecentSales />
                       </CardContent>
                     </Card>
                   </div>
@@ -190,4 +184,8 @@ export default function Home() {
           </ScrollArea>
 
         </main>
-      </div> */}
+      </MainLayout>
+    </>
+  );
+}
+      

@@ -15,3 +15,4 @@ bun dev
 ```
 
 ## Learn More
+[How to setup Cognito Idenity Pool](https://arpadt.com/articles/cognito-groups-iam-roles)
