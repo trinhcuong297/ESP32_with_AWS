@@ -14,7 +14,6 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from './ui/tooltip';
-import Image from 'next/image';
 
 interface DashboardNavProps {
   items: NavItem[];

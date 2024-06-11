@@ -9,7 +9,7 @@ const components = {
           <Image
             alt="Amplify logo"
             src="/logo.svg"
-            width={100}
+            width={200}
             height={100}
           />
         </View>
@@ -227,6 +227,6 @@ export default function AuthAWS ({children}: {children: React.ReactNode}) {
     formFields={formFields} 
     components={components}
     className="bg-[url('/auth_bg.svg')] bg-cover h-max min-h-screen w-full bg-fixed">
-        {children}
+      {children}
     </Authenticator>
 }
