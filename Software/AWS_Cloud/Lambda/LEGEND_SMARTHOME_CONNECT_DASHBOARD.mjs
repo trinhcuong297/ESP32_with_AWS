@@ -1,82 +1,52 @@
-import { ApiGatewayManagementApiClient, PostToConnectionCommand } from "@aws-sdk/client-apigatewaymanagementapi"; 
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import {
-  DynamoDBDocumentClient,
-  ScanCommand,
-  PutCommand,
-  GetCommand,
-  DeleteCommand,
-} from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, PutCommand, DeleteCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 
-// // Dynamo DB client config
+/* Dynamo DB client config */
 const dynamo_db_client = new DynamoDBClient({});
 const dynamo_client = DynamoDBDocumentClient.from(dynamo_db_client);
-const connectionTable = "CONNECTION_MANAGEMENT_DB";
-const dataTable = "SMARTHOME_SENSOR_DATA_DB";
+const connectionTable = "LEGEND_SMARTHOME_CONNECTION_MANAGEMENT";
 
-// API Gateway client config
-const ENDPOINT = "https://m45bd73suj.execute-api.us-east-1.amazonaws.com/production";
-const api_gw_client = new ApiGatewayManagementApiClient({endpoint: ENDPOINT});
-
-export async function handler(event, context) {
+export async function handler(event) {
     const routeKey = await event.requestContext.routeKey;
     const connectionId = await event.requestContext.connectionId;
-    const apiId = await event.requestContext.apiId;
-    const body = await event.body?event.body:"";
-    console.log(event, context)
-    switch (routeKey) 
+    
+    switch (routeKey)
     {
-      case '$connect':
-        try {
-          await dynamo_client.send (
-            await new PutCommand ({
-                TableName: connectionTable,
-                Item: {
-                  "connectionId": connectionId
-                },
-            }));
-        }
-        catch (err) {
-          console.log(err)
-        }
-        return {statusCode: 200};
-      case '$disconnect':
-        try {
-          await dynamo_client.send (
-            await new DeleteCommand ({
-                TableName: connectionTable,
-                Key: {
-                  "connectionId": connectionId
-                },
-            }));
-        }
-        catch (err) {
-          console.log(err)
-        }
-        return {statusCode: 200};
-      case 'updateData':
-        try {
-          const resData = await dynamo_client.send (
-            await new ScanCommand ({ TableName: dataTable })
-          );
-          return {statusCode: 200, body: JSON.stringify(await resData.Items)};
-        }
-        catch (err) {
-          console.log(err)
-          return {statusCode: 500, body: JSON.stringify(err)};
-        }
-        // const input = {
-        //   Data: JSON.stringify("NOOOO"),
-        //   ConnectionId: connectionId + "sd",
-        // };
-        // try {
-        //   const command = await new PostToConnectionCommand(input);
-        //   await api_gw_client.send(command);
-        // } catch (err) {
-        //   console.log(err)
-        // }
-      default:
-        console.log("Something wrong!")
+        case '$connect':
+            return {statusCode: 200};
+        case '$disconnect':
+            try {
+                await dynamo_client.send (
+                    await new DeleteCommand ({
+                        TableName: connectionTable,
+                        Key: { "connectionId" : connectionId }
+                    })
+                );
+                return {statusCode: 200};
+            }
+            catch (err) {
+                console.log(err);
+                return {statusCode: 500};
+            }
+        case 'user':
+            try {
+                const messageData = await JSON.parse(event.body);
+                await dynamo_client.send (
+                    await new PutCommand ({
+                        TableName: connectionTable,
+                        Item: {
+                          "connectionId": connectionId,
+                          "username": messageData.userName
+                        }
+                    })
+                );
+                const res = {"type": "auth", "status": 1};
+                return {statusCode: 200, body: JSON.stringify(res)};
+            }
+            catch (err) {
+                console.log(err)
+                return {statusCode: 500, body: JSON.stringify(err)};
+            }
     }
     return { statusCode: 200 };
 }

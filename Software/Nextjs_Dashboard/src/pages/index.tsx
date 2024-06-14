@@ -14,56 +14,18 @@ import { DashboardDataProvider } from "@/context/DashboardDataContext";
 import { useEffect, useState } from "react";
 import { fetchUserAttributes } from "aws-amplify/auth";
 import { useToast } from '@/components/ui/use-toast';
-
-
-const getUser = async (setUser: any) => {
-  const user = await fetchUserAttributes();
-  return setUser(user);
-}
+import { useUserDataContext } from "@/context/UserDataContext";
 
 export default function Home() {
   const [wss, setWss]: [any, any] = useState(null);
-  const [user, setUser]: [any, any] = useState(null);
-  const { toast } = useToast();
-  useEffect(() => {
-    if (user) {
-      const websocket = new WebSocket('wss://buqducu3wl.execute-api.us-east-1.amazonaws.com/production/');
-      
-      websocket.onopen = async () => {
-        websocket.send(JSON.stringify({"action": "user", "userName": ""}))
-        toast({
-          description: `Connected to server! ${user?.name}`,
-          className: "bg-emerald-300"
-        });
-      };
-
-      websocket.onmessage = async (event) => {
-          const data_parse = await JSON.parse(event.data)
-      };
-
-      websocket.onclose = () => {
-          console.log('WebSocket is closed');
-      };
-
-      setWss(websocket);
-      return () => { 
-        websocket.close(); 
-        toast({
-        description: 'Disconnected from server.',
-        className: "bg-red-500 text-white"
-        });
-      }
-    }else{
-      getUser(setUser);
-    }
-  }, []);
+  const {userAttributes, setUserAttributes, userSession, setUserSession} = useUserDataContext();
+  
 
   return (
     <>
       <Head>
       <title>Legend - Smart Home System with AWS</title>
       </Head>
-      <DashboardDataProvider>
         <MainLayout>
           <main className="flex-1 overflow-hidden">
             <ScrollArea className="h-full">
@@ -223,7 +185,6 @@ export default function Home() {
             </ScrollArea>
           </main>
         </MainLayout>
-      </DashboardDataProvider>
     </>
   );
 }

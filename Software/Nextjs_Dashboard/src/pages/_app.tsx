@@ -7,6 +7,8 @@ import { Amplify } from 'aws-amplify';
 import AuthAWS from "@/components/Auth";
 import Head from "next/head";
 import ThemeProvider from "@/components/layout/ThemeToggle/theme-provider";
+import { UserDataProvider } from "@/context/UserDataContext";
+import { WebSocketProvider } from "@/context/WebSocketContext";
 
 Amplify.configure({
   Auth: {
@@ -51,7 +53,12 @@ export default function App({ Component, pageProps }: AppProps) {
       <title>Legend - Smart Home System</title>
     </Head>
     <AuthAWS>
-      <Component {...pageProps} />;
+      <UserDataProvider>
+        <WebSocketProvider>
+          {/* <DataLayout></DataLayout> */}
+          <Component {...pageProps} />;
+        </WebSocketProvider>
+      </UserDataProvider>
     </AuthAWS>
   </ThemeProvider>
 }
