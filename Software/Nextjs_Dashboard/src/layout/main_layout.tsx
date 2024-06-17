@@ -4,7 +4,7 @@ import NextTopLoader from "nextjs-toploader";
 import Sidebar from "./sidebar";
 
 export default function MainLayout({children}: {children: React.ReactNode}) {
-    return <>
+    return <div className="">
         <NextTopLoader />
         <Toaster />
         <Header />
@@ -12,5 +12,5 @@ export default function MainLayout({children}: {children: React.ReactNode}) {
             <Sidebar />
             {children}
         </div>
-        </>
+        </div>
 }

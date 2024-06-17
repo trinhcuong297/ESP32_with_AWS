@@ -13,18 +13,25 @@ import MainLayout from "@/layout/main_layout";
 import { DashboardDataProvider } from "@/context/DashboardDataContext";
 import { useEffect, useState } from "react";
 import { fetchUserAttributes } from "aws-amplify/auth";
-import { useToast } from '@/components/ui/use-toast';
+import { toast, useToast } from '@/components/ui/use-toast';
 import { useUserDataContext } from "@/context/UserDataContext";
 import { Button } from "@/components/ui/button";
 import { DialogHeader, DialogFooter } from "@/components/ui/dialog";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ClaimDevice } from "@/components/ClaimDevice";
-import { AudioWaveformIcon, CircleCheckBigIcon, CpuIcon, ShirtIcon } from "lucide-react";
+import { AudioWaveformIcon, CircleCheckBigIcon, CircleCheckIcon, CloudRainIcon, CpuIcon, PlugZap2Icon, ShirtIcon, ThermometerSunIcon } from "lucide-react";
+import { useWebSocketContext } from "@/context/WebSocketContext";
+import { DataTableDemo } from "@/components/DataTable";
+import { Switch } from "@/components/ui/switch";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
 
 export default function Home() {
-  const [wss, setWss]: [any, any] = useState(null);
   const {userAttributes, setUserAttributes, userSession, setUserSession} = useUserDataContext();
-  
+  const {wss, setWss} = useWebSocketContext();
 
   return (
     <>
@@ -60,7 +67,9 @@ export default function Home() {
                 </div>
                 <Tabs defaultValue="overview" className="space-y-4">
                   <TabsList>
-                    <TabsTrigger value="overview">Overview</TabsTrigger>
+                    <TabsTrigger value="overview">
+                      Overview
+                    </TabsTrigger>
                     <TabsTrigger value="switch">
                       Light Switch
                     </TabsTrigger>
@@ -110,35 +119,36 @@ export default function Home() {
                           </p>
                         </CardContent>
                       </Card>
-                      <Card>
+                      <Card className="">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                           <CardTitle className="text-sm font-medium">
                             Scene
                           </CardTitle>
-                          <ShirtIcon className="w-4 h-4" />
+                          <CloudRainIcon className="w-4 h-4" />
                         </CardHeader>
                         <CardContent>
-                          <div className="text-2xl font-bold">+67</div>
+                          <div className="text-2xl font-bold">Rainy Scene</div>
                           <p className="text-xs text-muted-foreground">
-                            Rainy Scene
+                            Air Quality: Good
                           </p>
                         </CardContent>
                       </Card>
                     </div>
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
-                      <Card className="col-span-4">
+                    <div className="grid grid-cols-1 gap-4 xl:grid-cols-7">
+                      <Card className="col-span-1 lg:col-span-4">
                         <CardHeader>
                           <CardTitle>Overview</CardTitle>
                         </CardHeader>
-                        <CardContent className="pl-2">
+                        <CardContent>
                           <Overview />
                         </CardContent>
                       </Card>
-                      <Card className="col-span-4 md:col-span-3">
+                      <Card className="col-span-1 xl:col-span-3">
                         <CardHeader>
-                          <CardTitle>Recent Sales</CardTitle>
+                          <CardTitle>Recent Device</CardTitle>
                           <CardDescription>
-                            You made 265 sales this month.
+                            You got 100 device now.
+                            <DataTableDemo />
                           </CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -147,10 +157,231 @@ export default function Home() {
                     </div>
                   </TabsContent>
                   <TabsContent value="switch" className="space-y-4">
-                    
+                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                      <Card className="hover:cursor-pointer active:bg-slate-200">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                          <CardTitle className="text-sm font-medium">
+                            Device 1a2a3aaa
+                          </CardTitle>
+                          <PlugZap2Icon className="h-4 w-4"/>
+                        </CardHeader>
+                        <CardContent className="flex justify-between">
+                          <p className="text-xs text-muted-foreground">
+                          Last modify: 11:02 6/17/2024
+                          </p>
+                          <Switch/>
+                        </CardContent>
+                      </Card>
+                      <Card className="hover:cursor-pointer active:bg-slate-200">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                          <CardTitle className="text-sm font-medium">
+                            Device 1a2a3aaa
+                          </CardTitle>
+                          <PlugZap2Icon className="h-4 w-4"/>
+                        </CardHeader>
+                        <CardContent className="flex justify-between">
+                          <p className="text-xs text-muted-foreground">
+                          Last modify: 11:02 6/17/2024
+                          </p>
+                          <Switch/>
+                        </CardContent>
+                      </Card>
+                      <Card className="hover:cursor-pointer active:bg-slate-200">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                          <CardTitle className="text-sm font-medium">
+                            Device 1a2a3aaa
+                          </CardTitle>
+                          <PlugZap2Icon className="h-4 w-4"/>
+                        </CardHeader>
+                        <CardContent className="flex justify-between">
+                          <p className="text-xs text-muted-foreground">
+                          Last modify: 11:02 6/17/2024
+                          </p>
+                          <Switch/>
+                        </CardContent>
+                      </Card>
+                      <Card className="hover:cursor-pointer active:bg-slate-200">
+                        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                          <CardTitle className="text-sm font-medium">
+                            Device 1a2a3aaa
+                          </CardTitle>
+                          <PlugZap2Icon className="h-4 w-4"/>
+                        </CardHeader>
+                        <CardContent className="flex justify-between">
+                          <p className="text-xs text-muted-foreground">
+                          Last modify: 11:02 6/17/2024
+                          </p>
+                          <Switch/>
+                        </CardContent>
+                      </Card>
+                    </div>
                   </TabsContent>
                   <TabsContent value="temperature" className="space-y-4">
-                    
+                    <ResizablePanelGroup direction="horizontal" className="h-full">
+                      <ResizablePanel className=" min-w-[360px]">
+                        <ScrollArea className="h-full max-h-[700px]">
+                        <div className="px-3 space-y-4">
+                          <Card className="hover:cursor-pointer active:bg-slate-200">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                              <CardTitle className="text-sm font-medium">
+                                Device 1a2a3aaa
+                              </CardTitle>
+                              <CircleCheckIcon className="h-4 w-4 text-white bg-green-500 rounded-full"/>
+                            </CardHeader>
+                            <CardContent className="flex justify-between items-center">
+                              <p className="text-xs text-muted-foreground">
+                              Last modify: 11:02 6/17/2024
+                              </p>
+                              <div className="flex justify-between items-center space-x-3">
+                              <ThermometerSunIcon className="text-xs text-muted-foreground" />
+                              <p className="text-md font-semibold "> 27 oC </p>
+                              </div>
+                            </CardContent>
+                          </Card>
+                          <Card className="hover:cursor-pointer active:bg-slate-200">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                              <CardTitle className="text-sm font-medium">
+                                Device 1a2a3aaa
+                              </CardTitle>
+                              <CircleCheckIcon className="h-4 w-4 text-white bg-green-500 rounded-full"/>
+                            </CardHeader>
+                            <CardContent className="flex justify-between items-center">
+                              <p className="text-xs text-muted-foreground">
+                              Last modify: 11:02 6/17/2024
+                              </p>
+                              <div className="flex justify-between items-center space-x-3">
+                              <ThermometerSunIcon className="text-xs text-muted-foreground" />
+                              <p className="text-md font-semibold "> 27 oC </p>
+                              </div>
+                            </CardContent>
+                          </Card>
+                          <Card className="hover:cursor-pointer active:bg-slate-200">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                              <CardTitle className="text-sm font-medium">
+                                Device 1a2a3aaa
+                              </CardTitle>
+                              <CircleCheckIcon className="h-4 w-4 text-white bg-green-500 rounded-full"/>
+                            </CardHeader>
+                            <CardContent className="flex justify-between items-center">
+                              <p className="text-xs text-muted-foreground">
+                              Last modify: 11:02 6/17/2024
+                              </p>
+                              <div className="flex justify-between items-center space-x-3">
+                              <ThermometerSunIcon className="text-xs text-muted-foreground" />
+                              <p className="text-md font-semibold "> 27 oC </p>
+                              </div>
+                            </CardContent>
+                          </Card>
+                          <Card className="hover:cursor-pointer active:bg-slate-200">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                              <CardTitle className="text-sm font-medium">
+                                Device 1a2a3aaa
+                              </CardTitle>
+                              <CircleCheckIcon className="h-4 w-4 text-white bg-green-500 rounded-full"/>
+                            </CardHeader>
+                            <CardContent className="flex justify-between items-center">
+                              <p className="text-xs text-muted-foreground">
+                              Last modify: 11:02 6/17/2024
+                              </p>
+                              <div className="flex justify-between items-center space-x-3">
+                              <ThermometerSunIcon className="text-xs text-muted-foreground" />
+                              <p className="text-md font-semibold "> 27 oC </p>
+                              </div>
+                            </CardContent>
+                          </Card>
+                          <Card className="hover:cursor-pointer active:bg-slate-200">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                              <CardTitle className="text-sm font-medium">
+                                Device 1a2a3aaa
+                              </CardTitle>
+                              <CircleCheckIcon className="h-4 w-4 text-white bg-green-500 rounded-full"/>
+                            </CardHeader>
+                            <CardContent className="flex justify-between items-center">
+                              <p className="text-xs text-muted-foreground">
+                              Last modify: 11:02 6/17/2024
+                              </p>
+                              <div className="flex justify-between items-center space-x-3">
+                              <ThermometerSunIcon className="text-xs text-muted-foreground" />
+                              <p className="text-md font-semibold "> 27 oC </p>
+                              </div>
+                            </CardContent>
+                          </Card>
+                          <Card className="hover:cursor-pointer active:bg-slate-200">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                              <CardTitle className="text-sm font-medium">
+                                Device 1a2a3aaa
+                              </CardTitle>
+                              <CircleCheckIcon className="h-4 w-4 text-white bg-green-500 rounded-full"/>
+                            </CardHeader>
+                            <CardContent className="flex justify-between items-center">
+                              <p className="text-xs text-muted-foreground">
+                              Last modify: 11:02 6/17/2024
+                              </p>
+                              <div className="flex justify-between items-center space-x-3">
+                              <ThermometerSunIcon className="text-xs text-muted-foreground" />
+                              <p className="text-md font-semibold "> 27 oC </p>
+                              </div>
+                            </CardContent>
+                          </Card>
+                          <Card className="hover:cursor-pointer active:bg-slate-200">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                              <CardTitle className="text-sm font-medium">
+                                Device 1a2a3aaa
+                              </CardTitle>
+                              <CircleCheckIcon className="h-4 w-4 text-white bg-green-500 rounded-full"/>
+                            </CardHeader>
+                            <CardContent className="flex justify-between items-center">
+                              <p className="text-xs text-muted-foreground">
+                              Last modify: 11:02 6/17/2024
+                              </p>
+                              <div className="flex justify-between items-center space-x-3">
+                              <ThermometerSunIcon className="text-xs text-muted-foreground" />
+                              <p className="text-md font-semibold "> 27 oC </p>
+                              </div>
+                            </CardContent>
+                          </Card>
+                          <Card className="hover:cursor-pointer active:bg-slate-200">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                              <CardTitle className="text-sm font-medium">
+                                Device 1a2a3aaa
+                              </CardTitle>
+                              <CircleCheckIcon className="h-4 w-4 text-white bg-green-500 rounded-full"/>
+                            </CardHeader>
+                            <CardContent className="flex justify-between items-center">
+                              <p className="text-xs text-muted-foreground">
+                              Last modify: 11:02 6/17/2024
+                              </p>
+                              <div className="flex justify-between items-center space-x-3">
+                              <ThermometerSunIcon className="text-xs text-muted-foreground" />
+                              <p className="text-md font-semibold "> 27 oC </p>
+                              </div>
+                            </CardContent>
+                          </Card>
+                          <Card className="hover:cursor-pointer active:bg-slate-200">
+                            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                              <CardTitle className="text-sm font-medium">
+                                Device 1a2a3aaa
+                              </CardTitle>
+                              <CircleCheckIcon className="h-4 w-4 text-white bg-green-500 rounded-full"/>
+                            </CardHeader>
+                            <CardContent className="flex justify-between items-center">
+                              <p className="text-xs text-muted-foreground">
+                              Last modify: 11:02 6/17/2024
+                              </p>
+                              <div className="flex justify-between items-center space-x-3">
+                              <ThermometerSunIcon className="text-xs text-muted-foreground" />
+                              <p className="text-md font-semibold "> 27 oC </p>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </div>
+                        </ScrollArea>
+                      </ResizablePanel>
+                      <ResizableHandle withHandle />
+                      <ResizablePanel>
+                        <Overview />
+                      </ResizablePanel>
+                    </ResizablePanelGroup>
                   </TabsContent>
                 </Tabs>
               </div>

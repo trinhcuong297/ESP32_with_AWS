@@ -1,78 +1,77 @@
 'use client';
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { Area, AreaChart, Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const data = [
   {
     name: 'Jan',
-    total: Math.floor(Math.random() * 5000) + 1000
+    temperature: Math.floor(Math.random() * 10) + 20
   },
   {
     name: 'Feb',
-    total: Math.floor(Math.random() * 5000) + 1000
+    temperature: Math.floor(Math.random() * 10) + 20
   },
   {
     name: 'Mar',
-    total: Math.floor(Math.random() * 5000) + 1000
+    temperature: Math.floor(Math.random() * 10) + 20
   },
   {
     name: 'Apr',
-    total: Math.floor(Math.random() * 5000) + 1000
+    temperature: Math.floor(Math.random() * 10) + 20
   },
   {
     name: 'May',
-    total: Math.floor(Math.random() * 5000) + 1000
+    temperature: Math.floor(Math.random() * 10) + 20
   },
   {
     name: 'Jun',
-    total: Math.floor(Math.random() * 5000) + 1000
+    temperature: Math.floor(Math.random() * 10) + 20
   },
   {
     name: 'Jul',
-    total: Math.floor(Math.random() * 5000) + 1000
+    temperature: Math.floor(Math.random() * 10) + 20
   },
   {
     name: 'Aug',
-    total: Math.floor(Math.random() * 5000) + 1000
+    temperature: Math.floor(Math.random() * 10) + 20
   },
   {
     name: 'Sep',
-    total: Math.floor(Math.random() * 5000) + 1000
+    temperature: Math.floor(Math.random() * 10) + 20
   },
   {
     name: 'Oct',
-    total: Math.floor(Math.random() * 5000) + 1000
+    temperature: Math.floor(Math.random() * 10) + 20
   },
   {
     name: 'Nov',
-    total: Math.floor(Math.random() * 5000) + 1000
+    temperature: Math.floor(Math.random() * 10) + 20
   },
   {
     name: 'Dec',
-    total: Math.floor(Math.random() * 5000) + 1000
+    temperature: Math.floor(Math.random() * 10) + 20
   }
 ];
 
 export function Overview() {
   return (
-    <ResponsiveContainer width="100%" height={350}>
-      <BarChart data={data}>
+    <ResponsiveContainer width="100%" height={500}>
+      <AreaChart data={data}>
+        <defs>
+          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#000" stopOpacity={0.8}/>
+            <stop offset="95%" stopColor="#000" stopOpacity={0}/>
+          </linearGradient>
+        </defs>
         <XAxis
-          dataKey="name"
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
+        dataKey="name"
         />
         <YAxis
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(value) => `$${value}`}
+        domain={[0, 50]}
         />
-        <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
-      </BarChart>
+        <Tooltip />
+        <Area type="monotone" dataKey="temperature" fillOpacity={1} fill="url(#colorUv)" stroke="#000" />
+      </AreaChart>
     </ResponsiveContainer>
   );
 }

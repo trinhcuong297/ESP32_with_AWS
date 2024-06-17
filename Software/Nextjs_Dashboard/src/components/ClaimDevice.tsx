@@ -17,6 +17,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
 import { useUserDataContext } from "@/context/UserDataContext"
+import { useState } from "react"
+import { Loader2 } from "lucide-react"
 
 const FormSchema = z.object({
   deviceId: z.string().min(8, {
@@ -26,6 +28,7 @@ const FormSchema = z.object({
 
 export function ClaimDevice() {
   const {userAttributes, setUserAttributes, userSession, setUserSession} = useUserDataContext();
+  const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -40,6 +43,7 @@ export function ClaimDevice() {
     })
     try
     {
+      setLoading(true);
       const response: any = await fetch(`https://f38t8pf54l.execute-api.us-east-1.amazonaws.com/produce/claim_device?device=${data.deviceId}&user=${userSession?.username}`,
         {
           method: "POST"
@@ -64,6 +68,7 @@ export function ClaimDevice() {
         className: "bg-red-500 text-white"
       })
     }
+    setLoading(false);
   }
 
   return (
@@ -85,7 +90,13 @@ export function ClaimDevice() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">Submit</Button>
+        { loading ? 
+          <Button disabled className="w-full">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Please wait
+          </Button> :
+          <Button type="submit" className="w-full">Submit</Button>
+        }
       </form>
     </Form>
   )
